@@ -2,11 +2,11 @@ import express from "express";
 import mongoose from "mongoose";
 import postRouter from "./Routes/posts-routes";
 import userRouter from "./Routes/user-routes";
-// import cors from 'cors';
+import cors from 'cors';
 mongoose.set("strictQuery", true);
 
 const app = express();
-// app.use(cors());
+app.use(cors());
 app.use(express.json());
 app.use('/users',userRouter);
 app.use('/posts',postRouter);
