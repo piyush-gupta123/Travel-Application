@@ -7,8 +7,9 @@ mongoose.set("strictQuery", true);
 
 const app = express();
 app.use(cors());
+// app.use(express.urlencoded({extended:true}))
 app.use(express.json());
-app.use('/users',userRouter);
+app.use('/user',userRouter);
 app.use('/posts',postRouter);
 mongoose
   .connect(

@@ -45,7 +45,7 @@ export const loginUser = async (req, res, next) => {
     const {Email, Password} = req.body;
     try{
         if(!Email || !Password){
-            return res.status(404).json({Message : "Please Enter the Credentials"})
+            return res.status(404).json({Message : "Please Enter Your Credentials"})
         }
 
         const existingUser = await user.findOne({Email:Email});
