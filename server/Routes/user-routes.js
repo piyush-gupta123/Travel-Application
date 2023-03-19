@@ -5,7 +5,7 @@ import { getAllUsers, loginUser, registerUser } from '../Controllers/user-contro
 const userRouter = express.Router();
 
 userRouter.get('/',getAllUsers);
-userRouter.post('/register', cors() ,registerUser);
+userRouter.post('/register', registerUser);
 userRouter.post('/login',loginUser);
 
 

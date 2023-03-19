@@ -15,13 +15,13 @@ export const getAllUsers = async (req, res, next) => {
 };
 
 export const registerUser = async (req, res, next) => {
-  const { Name, Email, Password } = req.body;
+  const { name, email, password } = req.body;
   try {
-    if (!Name || !Email || !Password) {
+    if (!name || !email || !password) {
       return res.status(404).json({ Message: "Please Enter Your Credentials" });
     }
 
-    const existingUser = await user.findOne({Email });
+    const existingUser = await user.findOne({Email: email});
 
     if (existingUser) {
       return res.status(422).json({ Message: "User Alredy Exists" });
@@ -29,9 +29,9 @@ export const registerUser = async (req, res, next) => {
 
     const saltRounds = 10;
 
-    const hashedPassword = bcrypt.hashSync(Password, saltRounds);
+    const hashedPassword = bcrypt.hashSync(password, saltRounds);
 
-    const newUser = new user({ Name, Email, Password: hashedPassword });
+    const newUser = new user({ Name: name, Email: email, Password: hashedPassword });
 
     await newUser.save();
 
@@ -42,19 +42,19 @@ export const registerUser = async (req, res, next) => {
 };
 
 export const loginUser = async (req, res, next) => {
-    const {Email, Password} = req.body;
+    const {email, password} = req.body;
     try{
-        if(!Email || !Password){
+        if(!email || !password){
             return res.status(404).json({Message : "Please Enter Your Credentials"})
         }
 
-        const existingUser = await user.findOne({Email:Email});
+        const existingUser = await user.findOne({Email:email});
 
         if(!existingUser){
             return res.status(404).json({Message : "User Does Not Exists"})
         }
 
-        const existingUserPassword = bcrypt.compareSync(Password,existingUser.Password)
+        const existingUserPassword = bcrypt.compareSync(password,existingUser.Password)
 
         if(!existingUserPassword){
             return res.status(400).json({Message : "Invalid Credentials"})
