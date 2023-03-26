@@ -86,7 +86,7 @@ const Auth = () => {
           </Button>
           <Button
             onClick={() => setisSignUp(!isSignUp)}
-            sx={{ mt: 2, borderRadius: 10 }}
+            sx={{ mt: 2, borderRadius: 10, border: "1px solid skyblue" }}
             type="submit"
             variant="outline"
           >
