@@ -1,17 +1,17 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
+import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
-import { Provider } from "@reduxjs/toolkit";
-// import axios from "axios";
-// axios.defaults.baseURL = "http://localhost:5000";
+import { Provider } from "react-redux";
+import { Store } from "./redux/store";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Provider>
+      <Provider store={Store}>
         <App />
       </Provider>
     </BrowserRouter>

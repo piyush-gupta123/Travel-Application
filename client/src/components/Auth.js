@@ -1,24 +1,33 @@
 import { Box, Button, FormLabel, TextField, Typography } from "@mui/material";
 import React from "react";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { sendAuthRequest } from "../ApiHelpers.js/helper";
+import { login } from "../redux/index";
 
 const Auth = () => {
   const [isSignUp, setisSignUp] = useState(false);
 
   const [inputs, setinputs] = useState({ name: "", email: "", password: "" });
-  
+  const dispatch = useDispatch();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(inputs);
 
     if (isSignUp) {
       sendAuthRequest(true, inputs)
-        .then((data) => console.log(data))
+        .then((data) => localStorage.setItem("userId", data.user._id))
+        .then(() => {
+          dispatch(login());
+        })
         .catch((err) => console.log(err));
     } else {
       sendAuthRequest(false, inputs)
-        .then((data) => console.log(data))
+        .then((data) => localStorage.setItem("userId", data.id))
+        .then(() => {
+          dispatch(login());
+        })
         .catch((err) => console.log(err));
     }
   };
@@ -87,7 +96,6 @@ const Auth = () => {
           <Button
             onClick={() => setisSignUp(!isSignUp)}
             sx={{ mt: 2, borderRadius: 10, border: "1px solid skyblue" }}
-            type="submit"
             variant="outline"
           >
             Change to {isSignUp ? "Login" : "Sign Up"}
