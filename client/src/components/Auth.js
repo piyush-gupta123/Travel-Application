@@ -3,34 +3,48 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { sendAuthRequest } from "../ApiHelpers.js/helper";
-import { login } from "../redux/index";
+import authActions from "../redux/index";
+import { useNavigate } from "react-router-dom";
 
 const Auth = () => {
   const [isSignUp, setisSignUp] = useState(false);
-
+  // const [errors, setErrors] = useState("");
   const [inputs, setinputs] = useState({ name: "", email: "", password: "" });
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(inputs);
 
-    if (isSignUp) {
-      sendAuthRequest(true, inputs)
-        .then(
-          (data) => {localStorage.setItem("userId", data.id)}
-        )
-        .then(() => {
-          dispatch(login());
-        })
-        .catch((err) => console.log(err));
-    } else {
-      sendAuthRequest(false, inputs)
-        .then((data) => localStorage.setItem("userId", data.id))
-        .then(() => {
-          dispatch(login());
-        })
-        .catch((err) => console.log(err));
+    try {
+      if (isSignUp) {
+        sendAuthRequest(true, inputs)
+          .then((data) => {
+            localStorage.setItem("userId", data.id);
+          })
+          .then(() => {
+            dispatch(authActions.login());
+            navigate('/')
+          })
+          .catch((err) => {
+            // setErrors(err.response.data.Message);
+            console.log(err);
+          });
+      } else {
+        sendAuthRequest(false, inputs)
+          .then((data) => localStorage.setItem("userId", data.id))
+          .then(() => {
+            dispatch(authActions.login());
+            navigate('/')
+          })
+          .catch((err) => {
+            // setErrors(err.response.data.Message);
+            console.log(err);
+          });
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -75,6 +89,7 @@ const Auth = () => {
           <TextField
             onChange={handleChange}
             value={inputs.email}
+            type="email"
             name="email"
             required
             margin="normal"
@@ -102,6 +117,7 @@ const Auth = () => {
           >
             Change to {isSignUp ? "Login" : "Sign Up"}
           </Button>
+          {/* {errors.length>0 ? <label>{errors}</label> : ""} */}
         </Box>
       </form>
     </Box>

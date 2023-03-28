@@ -18,7 +18,9 @@ export const sendAuthRequest = async (signUp, data) => {
       email: data.email,
       password: data.password,
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+    });
 
   const resData = await response.data;
   return resData;
