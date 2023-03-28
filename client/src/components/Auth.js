@@ -17,7 +17,9 @@ const Auth = () => {
 
     if (isSignUp) {
       sendAuthRequest(true, inputs)
-        .then((data) => localStorage.setItem("userId", data.user._id))
+        .then(
+          (data) => {localStorage.setItem("userId", data.id)}
+        )
         .then(() => {
           dispatch(login());
         })

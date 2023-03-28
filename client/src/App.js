@@ -6,7 +6,7 @@ import Home from "./components/Home";
 import { useSelector } from "react-redux";
 
 function App() {
-  const isLoggedIn = useSelector((state)=>state.isloggedIn);
+  const isLoggedIn = useSelector(state=>state.isloggedIn)
   console.log(isLoggedIn);
   return (
     <div>

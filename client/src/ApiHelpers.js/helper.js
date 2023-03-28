@@ -12,13 +12,12 @@ export const getAllUsers = async () => {
 };
 
 export const sendAuthRequest = async (signUp, data) => {
-  const value = {
-    name: data.name ? data.name : "",
-    email: data.email,
-    password: data.password,
-  };
   const response = await axios
-    .post(`http://localhost:5000/user/${signUp ? "register" : "login"}/`, value)
+    .post(`http://localhost:5000/user/${signUp ? "register" : "login"}/`, {
+      name: data.name ? data.name : "",
+      email: data.email,
+      password: data.password,
+    })
     .catch((err) => console.log(err));
 
   const resData = await response.data;

@@ -31,11 +31,12 @@ export const registerUser = async (req, res, next) => {
 
     const hashedPassword = bcrypt.hashSync(password, saltRounds);
 
-    const newUser = new user({ Name: name, Email: email, Password: hashedPassword, Posts:[] });
+    const newUser = new user({ Name: name, Email: email, Password: hashedPassword});
+    console.log(newUser._id);
 
     await newUser.save();
 
-    return res.status(201).json({ newUser });
+    return res.status(201).json({id: newUser._id, newUser})
   } catch (err) {
     return console.log(err);
   }
