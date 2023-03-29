@@ -50,3 +50,17 @@ export const sendPostRequest = async (inputs) => {
 
   return response;
 };
+
+export const getItem = async (id) => {
+  const res = await axios
+    .get(`http://localhost:5000/posts/${id}`)
+    .catch((err) => console.log(err));
+
+  if(res.status!==200){
+    return console.log("Unable to fetch post");
+  }
+
+  const resData = await res.data
+
+  return resData;
+};
