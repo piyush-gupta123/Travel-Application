@@ -12,8 +12,23 @@ import React from "react";
 import EditLocationAltIcon from "@mui/icons-material/EditLocationAlt";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { Link } from "react-router-dom";
 
-const DiaryItems = ({ title, description, imageURL, location, date, id }) => {
+const DiaryItems = ({
+  title,
+  description,
+  imageURL,
+  location,
+  date,
+  id,
+  user,
+}) => {
+  const isLoggedInUser = () => {
+    if (localStorage.getItem("userId") === user) {
+      return true;
+    }
+    return false;
+  };
   return (
     <Card
       sx={{
@@ -41,7 +56,7 @@ const DiaryItems = ({ title, description, imageURL, location, date, id }) => {
         header={location}
         subheader={date}
       />
-      <img height="200" src=".\trekking_in_kathmandu.webp" alt={title} />
+      <img height="200" src={imageURL} alt={title} />
       <CardContent>
         <Typography variant="h5" color={"text.secondary"} padding={1}>
           {title}
@@ -62,14 +77,16 @@ const DiaryItems = ({ title, description, imageURL, location, date, id }) => {
           </Typography>
         </Box>
       </CardContent>
-      <CardActions sx={{ marginLeft: "auto" }}>
-        <IconButton color="warning">
-          <EditIcon />
-        </IconButton>
-        <IconButton color="error">
-          <DeleteIcon />
-        </IconButton>
-      </CardActions>
+      {isLoggedInUser() && (
+        <CardActions sx={{ marginLeft: "auto" }}>
+          <IconButton color="warning" LinkComponent ={Link} to={`/posts/${id}`}>
+            <EditIcon />
+          </IconButton>
+          <IconButton color="error" LinkComponent={Link} to={`/posts/delete/${id}`}>
+            <DeleteIcon />
+          </IconButton>
+        </CardActions>
+      )}
     </Card>
   );
 };

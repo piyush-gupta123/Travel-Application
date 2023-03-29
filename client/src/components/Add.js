@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Box, Button, FormLabel, TextField, Typography } from "@mui/material";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
+import { sendPostRequest } from "../ApiHelpers.js/helper";
 
 const Add = () => {
   const [inputs, setInputs] = useState({
@@ -11,12 +12,22 @@ const Add = () => {
     date: "",
   });
 
-  const handleChange = (e)=>{
-    setInputs((prevstate)=>({
+  const handleChange = (e) => {
+    setInputs((prevstate) => ({
       ...prevstate,
       [e.target.name]: e.target.value,
-    }))
-  }
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // console.log(inputs);
+
+    sendPostRequest(inputs)
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
+  };
+
   return (
     <Box display="flex" flexDirection="column" height="100%" width="100%">
       <Box display={"flex"} margin="auto" marginTop={5}>
@@ -31,7 +42,7 @@ const Add = () => {
           sx={{ fontSize: "40px", paddingLeft: 1, color: "lightcoral" }}
         />
       </Box>
-      <form>
+      <form onSubmit={handleSubmit}>
         <Box
           display="flex"
           flexDirection={"column"}
@@ -43,31 +54,31 @@ const Add = () => {
           <TextField
             variant="standard"
             name="title"
+            onChange={handleChange}
             value={inputs.title}
             margin="normal"
-            onChange={handleChange}
           />
           <FormLabel sx={{ fontFamily: "quicksand" }}>Description</FormLabel>
           <TextField
             variant="standard"
             margin="normal"
             name="description"
-            value={inputs.description}
             onChange={handleChange}
+            value={inputs.description}
           />
           <FormLabel sx={{ fontFamily: "quicksand" }}>Image URL</FormLabel>
           <TextField
-            name="imageurl"
-            value={inputs.imageURL}
+            name="imageURL"
             onChange={handleChange}
+            value={inputs.imageURL}
             variant="standard"
             margin="normal"
           />
           <FormLabel sx={{ fontFamily: "quicksand" }}>Location</FormLabel>
           <TextField
             name="location"
-            value={inputs.location}
             onChange={handleChange}
+            value={inputs.location}
             variant="standard"
             margin="normal"
           />
@@ -75,8 +86,8 @@ const Add = () => {
           <TextField
             type={"date"}
             name="date"
-            value={inputs.date}
             onChange={handleChange}
+            value={inputs.date}
             variant="standard"
             margin="normal"
           />
@@ -84,6 +95,7 @@ const Add = () => {
             color="warning"
             sx={{ width: "40%", margin: "auto", mt: 2, borderRadius: 7 }}
             variant="contained"
+            type="submit"
           >
             POST
           </Button>

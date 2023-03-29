@@ -24,11 +24,11 @@ const Diaries = () => {
           <DiaryItems
             title={item.title}
             description={item.description}
-            image = {item.image}
+            image={item.image}
             location={item.location}
             date={new Date(`${item.date}`).toLocaleDateString()}
             id={item._id}
-            
+            user={item.user}
             key={index}
           />
         ))}

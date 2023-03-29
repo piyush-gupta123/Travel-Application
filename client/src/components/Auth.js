@@ -13,6 +13,21 @@ const Auth = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const checkTimeOut = () => {
+    var hours = 1; // to clear the localStorage after 1 hour
+    // (if someone want to clear after 8hrs simply change hours=8)
+    var now = new Date().getTime();
+    var setupTime = localStorage.getItem("setupTime");
+    if (setupTime == null) {
+      localStorage.setItem("setupTime", now);
+    } else {
+      if (now - setupTime > hours * 60 * 60 * 1000) {
+        localStorage.clear();
+        localStorage.setItem("setupTime", now);
+      }
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(inputs);
@@ -25,7 +40,7 @@ const Auth = () => {
           })
           .then(() => {
             dispatch(authActions.login());
-            navigate('/')
+            navigate("/");
           })
           .catch((err) => {
             // setErrors(err.response.data.Message);
@@ -36,13 +51,14 @@ const Auth = () => {
           .then((data) => localStorage.setItem("userId", data.id))
           .then(() => {
             dispatch(authActions.login());
-            navigate('/')
+            navigate("/");
           })
           .catch((err) => {
             // setErrors(err.response.data.Message);
             console.log(err);
           });
       }
+      checkTimeOut()
     } catch (err) {
       console.log(err);
     }

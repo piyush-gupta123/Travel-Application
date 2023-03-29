@@ -1,8 +1,12 @@
 import { Box, Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import React from "react";
+// import { useSelector } from "react-redux";
+// import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  // const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  // const navigate = useNavigate();
   return (
     <Box width="100%" position={"relative"} height="90vh">
       <img src="./road.jpg" alt="img.jpg" width={"100%"} height="70%" />

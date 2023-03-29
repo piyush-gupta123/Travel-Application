@@ -6,9 +6,11 @@ import Home from "./components/Home";
 import { useSelector } from "react-redux";
 import Add from "./components/Add";
 import Profile from "./components/Profile";
+import DiaryUpdate from "./components/DiaryUpdate";
+import DeleteDiaryItems from "./components/DeleteDiaryItems";
 
 function App() {
-  const isLoggedIn = useSelector((state)=>state.isLoggedIn)
+  const isLoggedIn = useSelector((state) => state.isLoggedIn);
   console.log(isLoggedIn);
   return (
     <div>
@@ -22,8 +24,10 @@ function App() {
           </Route>
           <Route path="/auth" element={<Auth />}></Route>
           <Route path="/diaries" element={<Diaries />}></Route>
-          <Route path="/add" element={<Add/>} />
-          <Route path="/profile" element= {<Profile/>} />
+          <Route path="/add" element={<Add />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/posts/:id" element={<DiaryUpdate />} />
+          <Route path="/posts/delete/:id" element={<DeleteDiaryItems/>} />
         </Routes>
       </section>
     </div>
