@@ -54,13 +54,50 @@ export const sendPostRequest = async (inputs) => {
 export const getItem = async (id) => {
   const res = await axios
     .get(`http://localhost:5000/posts/${id}`)
+    // .then((data) => console.log(data))
     .catch((err) => console.log(err));
 
-  if(res.status!==200){
+  if (res.status !== 200) {
     return console.log("Unable to fetch post");
   }
 
-  const resData = await res.data
+  const resData = await res.data;
+
+  return resData;
+};
+
+export const updatePost = async (id, inputs) => {
+  const response = await axios
+    .put(`http://localhost:5000/posts/update/${id}`, {
+      title: inputs.title,
+      description: inputs.description,
+      image: inputs.image,
+      location: inputs.location,
+    })
+    // .then((data) => console.log(data))
+    .catch((err) => console.log(err));
+
+  if (response.status !== 200) {
+    return console.log("Unable to update");
+  }
+
+  const resData = await response.data;
+
+  return resData;
+};
+
+export const deletePost = async (id) => {
+  const response = await axios
+    .delete(`http://localhost:5000/posts/delete/${id}`)
+    .then(()=>console.log("Success"))
+    .catch((err) => console.log(err));
+
+    
+  if (response.status !== 200) {
+    console.log("unable to delete");
+  }
+
+  const resData = response.data;
 
   return resData;
 };

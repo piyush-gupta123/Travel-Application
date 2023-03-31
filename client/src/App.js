@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import Add from "./components/Add";
 import Profile from "./components/Profile";
 import DiaryUpdate from "./components/DiaryUpdate";
-import DeleteDiaryItems from "./components/DeleteDiaryItems";
 
 function App() {
   const isLoggedIn = useSelector((state) => state.isLoggedIn);
@@ -27,7 +26,6 @@ function App() {
           <Route path="/add" element={<Add />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/posts/:id" element={<DiaryUpdate />} />
-          <Route path="/posts/delete/:id" element={<DeleteDiaryItems/>} />
         </Routes>
       </section>
     </div>

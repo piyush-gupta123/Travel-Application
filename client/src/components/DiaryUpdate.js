@@ -1,7 +1,7 @@
 import { Box, Button, FormLabel, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getItem } from "../ApiHelpers.js/helper";
+import { getItem, updatePost } from "../ApiHelpers.js/helper";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 
 const DiaryUpdate = () => {
@@ -10,23 +10,22 @@ const DiaryUpdate = () => {
   const [inputs, setInputs] = useState({
     title: "",
     description: "",
-    imageURL: "",
+    image: "",
     location: "",
   });
   const id = useParams().id;
-  console.log(id);
   useEffect(() => {
     getItem(id)
       .then((data) => {
-        setPosts(data.post)
+        setPosts(data.currPost);
+        // console.log(data.currPost);
         setInputs({
-            title: data.post.title,
-            description: data.post.description,
-            imageURL: data.post.imageURL,
-            location: data.post.location,
-        })
+          title: data.currPost.title,
+          description: data.currPost.description,
+          image: data.currPost.image,
+          location: data.currPost.location,
+        });
       })
-      .catch((err) => console.log(err));
   }, [id]);
 
   const handleChange = (e) => {
@@ -38,7 +37,10 @@ const DiaryUpdate = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(inputs);
+    // console.log(inputs);
+    updatePost(id,inputs)
+    .then((data)=>console.log(data))
+    .catch((err)=>console.log(err))
   };
 
   return (
@@ -55,57 +57,59 @@ const DiaryUpdate = () => {
           sx={{ fontSize: "40px", paddingLeft: 1, color: "lightcoral" }}
         />
       </Box>
-      {posts && <form onSubmit={handleSubmit}>
-        <Box
-          display="flex"
-          flexDirection={"column"}
-          padding={3}
-          margin="auto"
-          width="80%"
-        >
-          <FormLabel sx={{ fontFamily: "quicksand" }}>Title</FormLabel>
-          <TextField
-            variant="standard"
-            name="title"
-            onChange={handleChange}
-            value={inputs.title}
-            margin="normal"
-          />
-          <FormLabel sx={{ fontFamily: "quicksand" }}>Description</FormLabel>
-          <TextField
-            variant="standard"
-            margin="normal"
-            name="description"
-            onChange={handleChange}
-            value={inputs.description}
-          />
-          <FormLabel sx={{ fontFamily: "quicksand" }}>Image URL</FormLabel>
-          <TextField
-            name="imageURL"
-            onChange={handleChange}
-            value={inputs.imageURL}
-            variant="standard"
-            margin="normal"
-          />
-          <FormLabel sx={{ fontFamily: "quicksand" }}>Location</FormLabel>
-          <TextField
-            name="location"
-            onChange={handleChange}
-            value={inputs.location}
-            variant="standard"
-            margin="normal"
-          />
-
-          <Button
-            color="warning"
-            sx={{ width: "40%", margin: "auto", mt: 2, borderRadius: 7 }}
-            variant="contained"
-            type="submit"
+      {posts && (
+        <form onSubmit={handleSubmit}>
+          <Box
+            display="flex"
+            flexDirection={"column"}
+            padding={3}
+            margin="auto"
+            width="80%"
           >
-            UPDATE
-          </Button>
-        </Box>
-      </form>}
+            <FormLabel sx={{ fontFamily: "quicksand" }}>Title</FormLabel>
+            <TextField
+              variant="standard"
+              name="title"
+              onChange={handleChange}
+              value={inputs.title}
+              margin="normal"
+            />
+            <FormLabel sx={{ fontFamily: "quicksand" }}>Description</FormLabel>
+            <TextField
+              variant="standard"
+              margin="normal"
+              name="description"
+              onChange={handleChange}
+              value={inputs.description}
+            />
+            <FormLabel sx={{ fontFamily: "quicksand" }}>Image URL</FormLabel>
+            <TextField
+              name="imageURL"
+              onChange={handleChange}
+              value={inputs.image}
+              variant="standard"
+              margin="normal"
+            />
+            <FormLabel sx={{ fontFamily: "quicksand" }}>Location</FormLabel>
+            <TextField
+              name="location"
+              onChange={handleChange}
+              value={inputs.location}
+              variant="standard"
+              margin="normal"
+            />
+
+            <Button
+              color="warning"
+              sx={{ width: "40%", margin: "auto", mt: 2, borderRadius: 7 }}
+              variant="contained"
+              type="submit"
+            >
+              UPDATE
+            </Button>
+          </Box>
+        </form>
+      )}
     </Box>
   );
 };

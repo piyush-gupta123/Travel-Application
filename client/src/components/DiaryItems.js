@@ -1,4 +1,5 @@
 import {
+  Alert,
   Avatar,
   Box,
   Card,
@@ -6,13 +7,15 @@ import {
   CardContent,
   CardHeader,
   IconButton,
+  Snackbar,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import EditLocationAltIcon from "@mui/icons-material/EditLocationAlt";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Link } from "react-router-dom";
+import { deletePost } from "../ApiHelpers.js/helper";
 
 const DiaryItems = ({
   title,
@@ -23,12 +26,21 @@ const DiaryItems = ({
   id,
   user,
 }) => {
+  const [open, setOpen] = useState(false);
   const isLoggedInUser = () => {
     if (localStorage.getItem("userId") === user) {
       return true;
     }
     return false;
   };
+
+  const handleDelete = ()=>{
+    deletePost(id)
+    .then((data)=>console.log(data))
+    .catch((err)=>console.log(err))
+    setOpen(true)
+  };
+
   return (
     <Card
       sx={{
@@ -79,14 +91,23 @@ const DiaryItems = ({
       </CardContent>
       {isLoggedInUser() && (
         <CardActions sx={{ marginLeft: "auto" }}>
-          <IconButton color="warning" LinkComponent ={Link} to={`/posts/${id}`}>
+          <IconButton color="warning" LinkComponent={Link} to={`/posts/${id}`}>
             <EditIcon />
           </IconButton>
-          <IconButton color="error" LinkComponent={Link} to={`/posts/delete/${id}`}>
+          <IconButton
+            color="error"
+            onClick={handleDelete}
+          >
             <DeleteIcon />
           </IconButton>
         </CardActions>
       )}
+
+      <Snackbar open={open} autoHideDuration={6000} onClose={()=>setOpen(false)}>
+        <Alert onClose={()=>setOpen(false)} severity="success" sx={{ width: "100%" }}>
+          Post Deleted Successfully
+        </Alert>
+      </Snackbar>
     </Card>
   );
 };
