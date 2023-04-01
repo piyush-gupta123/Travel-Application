@@ -94,10 +94,23 @@ export const deletePost = async (id) => {
 
     
   if (response.status !== 200) {
-    console.log("unable to delete");
+    return console.log("Unable to delete");
   }
 
   const resData = response.data;
 
   return resData;
 };
+
+export const getUser = async()=>{
+  const response = await axios.get(`http://localhost:5000/user/${localStorage.getItem("userId")}`)
+  .then((data)=>console.log(data))
+  .catch((err)=>console.log(err))
+
+  if(response.status !== 200){
+    return console.log("No User Found")
+  }
+
+  const resData = response.data;
+  return resData;
+}

@@ -14,6 +14,23 @@ export const getAllUsers = async (req, res, next) => {
   }
 };
 
+export const getUserById = async (req, res, next) => {
+  const id = req.params.id;
+  try {
+    const user = await user.findById(id).populate("Posts");
+
+    if (!user) {
+      return res.status(404).json({ Message: "User Not Found" });
+    }
+
+    console.log(user);
+
+    return res.status(200).json({ user });
+  } catch (err) {
+    return console.log(err);
+  }
+};
+
 export const registerUser = async (req, res, next) => {
   const { name, email, password } = req.body;
   try {
@@ -21,7 +38,7 @@ export const registerUser = async (req, res, next) => {
       return res.status(404).json({ Message: "Please Enter Your Credentials" });
     }
 
-    const existingUser = await user.findOne({Email: email});
+    const existingUser = await user.findOne({ Email: email });
 
     if (existingUser) {
       return res.status(422).json({ Message: "User Alredy Exists" });
@@ -31,41 +48,47 @@ export const registerUser = async (req, res, next) => {
 
     const hashedPassword = bcrypt.hashSync(password, saltRounds);
 
-    const newUser = new user({ Name: name, Email: email, Password: hashedPassword});
+    const newUser = new user({
+      Name: name,
+      Email: email,
+      Password: hashedPassword,
+    });
     console.log(newUser._id);
 
     await newUser.save();
 
-    return res.status(201).json({id: newUser._id, newUser})
+    return res.status(201).json({ id: newUser._id, newUser });
   } catch (err) {
     return console.log(err);
   }
 };
 
 export const loginUser = async (req, res, next) => {
-    const {email, password} = req.body;
-    try{
-        if(!email || !password){
-            return res.status(404).json({Message : "Please Enter Your Credentials"})
-        }
-
-        const existingUser = await user.findOne({Email:email});
-
-        if(!existingUser){
-            return res.status(404).json({Message : "User Does Not Exists"})
-        }
-
-        const existingUserPassword = bcrypt.compareSync(password,existingUser.Password)
-
-        if(!existingUserPassword){
-            return res.status(400).json({Message : "Invalid Credentials"})
-        }
-
-        return res.status(200).json({id: existingUser._id,Message : "Login Successfull"})
-
+  const { email, password } = req.body;
+  try {
+    if (!email || !password) {
+      return res.status(404).json({ Message: "Please Enter Your Credentials" });
     }
-    catch(err){
-        return console.log(err);
+
+    const existingUser = await user.findOne({ Email: email });
+
+    if (!existingUser) {
+      return res.status(404).json({ Message: "User Does Not Exists" });
     }
+
+    const existingUserPassword = bcrypt.compareSync(
+      password,
+      existingUser.Password
+    );
+
+    if (!existingUserPassword) {
+      return res.status(400).json({ Message: "Invalid Credentials" });
+    }
+
+    return res
+      .status(200)
+      .json({ id: existingUser._id, Message: "Login Successfull" });
+  } catch (err) {
+    return console.log(err);
+  }
 };
-
