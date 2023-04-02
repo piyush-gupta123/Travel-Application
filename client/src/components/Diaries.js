@@ -2,14 +2,26 @@ import { Box } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { getAllUsers } from "../ApiHelpers.js/helper";
 import DiaryItems from "./DiaryItems";
+import { useNavigate } from "react-router-dom";
+import {useSelector } from "react-redux"
 
 const Diaries = () => {
   const [posts, setPosts] = useState();
+  const isLoggedIn = useSelector((state)=>state.isLoggedIn)
+  const navigate = useNavigate()
+  const refresh = ()=>{
+    if(isLoggedIn){
+      navigate(0)
+    }
+    else{
+      navigate('/auth')
+    }
+  }
   useEffect(() => {
     getAllUsers()
       .then((data) => setPosts(data?.posts))
       .catch((err) => console.log(err));
-  }, []);
+  },[refresh]);
   return (
     <Box
       display={"flex"}

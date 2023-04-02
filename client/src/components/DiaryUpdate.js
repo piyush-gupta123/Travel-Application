@@ -1,6 +1,6 @@
 import { Box, Button, FormLabel, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getItem, updatePost } from "../ApiHelpers.js/helper";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 
@@ -13,6 +13,7 @@ const DiaryUpdate = () => {
     image: "",
     location: "",
   });
+  const navigate = useNavigate()
   const id = useParams().id;
   useEffect(() => {
     getItem(id)
@@ -41,6 +42,8 @@ const DiaryUpdate = () => {
     updatePost(id,inputs)
     .then((data)=>console.log(data))
     .catch((err)=>console.log(err))
+
+    navigate('/diaries')
   };
 
   return (

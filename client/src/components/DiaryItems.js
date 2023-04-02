@@ -20,7 +20,7 @@ import { deletePost } from "../ApiHelpers.js/helper";
 const DiaryItems = ({
   title,
   description,
-  imageURL,
+  image,
   location,
   date,
   id,
@@ -68,7 +68,7 @@ const DiaryItems = ({
         header={location}
         subheader={date}
       />
-      <img height="200" src={imageURL} alt={title} />
+      <img height="200" src={image} alt={title} />
       <CardContent>
         <Typography variant="h5" color={"text.secondary"} padding={1}>
           {title}
@@ -82,7 +82,7 @@ const DiaryItems = ({
             fontWeight="bold"
             variant="caption"
           >
-            Piyush Gupta:
+            Piyush Gupta
           </Typography>
           <Typography variant="body2" color="text.secondary" paddingTop={1}>
             {description}

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Box, Button, FormLabel, TextField, Typography } from "@mui/material";
 import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 import { sendPostRequest } from "../ApiHelpers.js/helper";
+import { useNavigate } from "react-router-dom";
 
 const Add = () => {
   const [inputs, setInputs] = useState({
@@ -11,7 +12,7 @@ const Add = () => {
     location: "",
     date: "",
   });
-
+  const navigate = useNavigate();
   const handleChange = (e) => {
     setInputs((prevstate) => ({
       ...prevstate,
@@ -26,6 +27,8 @@ const Add = () => {
     sendPostRequest(inputs)
       .then((data) => console.log(data))
       .catch((err) => console.log(err));
+
+    navigate('/diaries')
   };
 
   return (

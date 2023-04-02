@@ -111,7 +111,7 @@ export const getUser = async () => {
   //   return console.log("No User Found");
   // }
 
-  const resData = response.data;
+  const resData = await response.data;
 
   return resData;
 };

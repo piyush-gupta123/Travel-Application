@@ -13,6 +13,18 @@ const Auth = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const onResReceived = (data)=>{
+    if(isSignUp){
+      localStorage.setItem("userId",data.user._id)
+    }
+    else{
+      localStorage.removeItem("useId",data.id)
+    }
+
+    dispatch(authActions.login())
+    navigate('/')
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(inputs);
@@ -20,24 +32,14 @@ const Auth = () => {
     try {
       if (isSignUp) {
         sendAuthRequest(true, inputs)
-          .then((data) => {
-            localStorage.setItem("userId", data.id);
-          })
-          .then(() => {
-            dispatch(authActions.login());
-            navigate("/");
-          })
+          .then(onResReceived)
           .catch((err) => {
             // setErrors(err.response.data.Message);
             console.log(err);
           });
       } else {
         sendAuthRequest(false, inputs)
-          .then((data) => localStorage.setItem("userId", data.id))
-          .then(() => {
-            dispatch(authActions.login());
-            navigate("/");
-          })
+          .then(onResReceived)
           .catch((err) => {
             // setErrors(err.response.data.Message);
             console.log(err);
