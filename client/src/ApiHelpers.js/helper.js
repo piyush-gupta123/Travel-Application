@@ -89,10 +89,9 @@ export const updatePost = async (id, inputs) => {
 export const deletePost = async (id) => {
   const response = await axios
     .delete(`http://localhost:5000/posts/delete/${id}`)
-    .then(()=>console.log("Success"))
+    .then(() => console.log("Success"))
     .catch((err) => console.log(err));
 
-    
   if (response.status !== 200) {
     return console.log("Unable to delete");
   }
@@ -102,15 +101,17 @@ export const deletePost = async (id) => {
   return resData;
 };
 
-export const getUser = async()=>{
-  const response = await axios.get(`http://localhost:5000/user/${localStorage.getItem("userId")}`)
-  .then((data)=>console.log(data))
-  .catch((err)=>console.log(err))
+export const getUser = async () => {
+  const response = await axios
+    .get(`http://localhost:5000/user/${localStorage.getItem("userId")}`)
+    // .then((data) => console.log(data))
+    .catch((err) => console.log(err));
 
-  if(response.status !== 200){
-    return console.log("No User Found")
-  }
+  // if (response.status !== 200) {
+  //   return console.log("No User Found");
+  // }
 
   const resData = response.data;
+
   return resData;
-}
+};

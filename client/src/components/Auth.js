@@ -15,7 +15,7 @@ const Auth = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(inputs);
+    // console.log(inputs);
 
     try {
       if (isSignUp) {

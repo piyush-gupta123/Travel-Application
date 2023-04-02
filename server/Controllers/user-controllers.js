@@ -17,15 +17,15 @@ export const getAllUsers = async (req, res, next) => {
 export const getUserById = async (req, res, next) => {
   const id = req.params.id;
   try {
-    const user = await user.findById(id).populate("Posts");
+    const new_user = await user.findById(id).populate("Posts")
 
-    if (!user) {
+    if (!new_user) {
       return res.status(404).json({ Message: "User Not Found" });
     }
 
-    console.log(user);
+    console.log(new_user);
 
-    return res.status(200).json({ user });
+    return res.status(200).json({ new_user });
   } catch (err) {
     return console.log(err);
   }
