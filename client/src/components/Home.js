@@ -1,12 +1,10 @@
 import { Box, Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import React from "react";
-// import { useSelector } from "react-redux";
-// import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Home = () => {
-  // const isLoggedIn = useSelector((state) => state.isLoggedIn);
-  // const navigate = useNavigate();
+  const isLoggedIn = useSelector((state) => state.isLoggedIn);
   return (
     <Box width="100%" position={"relative"} height="90vh">
       <img src="./road.jpg" alt="img.jpg" width={"100%"} height="70%" />
@@ -41,14 +39,25 @@ const Home = () => {
           SHARE YOUR TRAVEL STORIES WITH US
         </Typography>
         <Box margin={"auto"}>
-          <Button
-            variant="outlined"
-            LinkComponent={Link}
-            to="/add"
-            sx={{ mr: 2 }}
-          >
-            SHARE YOUR STORIES
-          </Button>
+          {isLoggedIn ? (
+            <Button
+              variant="outlined"
+              LinkComponent={Link}
+              to="/add"
+              sx={{ mr: 2 }}
+            >
+              SHARE YOUR STORIES
+            </Button>
+          ) : (
+            <Button
+              variant="outlined"
+              LinkComponent={Link}
+              to="/auth"
+              sx={{ mr: 2 }}
+            >
+              SHARE YOUR STORIES
+            </Button>
+          )}
           <Button
             variant="contained"
             LinkComponent={Link}
