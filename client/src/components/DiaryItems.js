@@ -25,6 +25,7 @@ const DiaryItems = ({
   date,
   id,
   user,
+  name
 }) => {
   const [open, setOpen] = useState(false);
   const isLoggedInUser = () => {
@@ -39,6 +40,7 @@ const DiaryItems = ({
     .then((data)=>console.log(data))
     .catch((err)=>console.log(err))
     setOpen(true)
+    window.location.reload()
   };
 
   return (
@@ -56,7 +58,7 @@ const DiaryItems = ({
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: "red" }} aria-label="recipe">
-            R
+            {name.charAt(0)}
           </Avatar>
         }
         action={
@@ -82,7 +84,7 @@ const DiaryItems = ({
             fontWeight="bold"
             variant="caption"
           >
-            Piyush Gupta
+            {name}
           </Typography>
           <Typography variant="body2" color="text.secondary" paddingTop={1}>
             {description}

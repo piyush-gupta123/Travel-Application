@@ -23,7 +23,7 @@ export const getUserById = async (req, res, next) => {
       return res.status(404).json({ Message: "User Not Found" });
     }
 
-    console.log(new_user);
+    // console.log(new_user);
 
     return res.status(200).json({ new_user });
   } catch (err) {

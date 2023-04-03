@@ -20,15 +20,19 @@ const Add = () => {
     }));
   };
 
+  const onResReceived = (data)=>{
+    console.log(data);
+    navigate('/diaries')
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(inputs);
 
     sendPostRequest(inputs)
-      .then((data) => console.log(data))
+      .then(onResReceived)
       .catch((err) => console.log(err));
 
-    navigate('/diaries')
   };
 
   return (

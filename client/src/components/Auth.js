@@ -18,11 +18,11 @@ const Auth = () => {
       localStorage.setItem("userId",data.user._id)
     }
     else{
-      localStorage.removeItem("useId",data.id)
+      localStorage.setItem("userId",data.id)
     }
 
     dispatch(authActions.login())
-    navigate('/')
+    navigate('/diaries')
   }
 
   const handleSubmit = (e) => {

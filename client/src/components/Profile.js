@@ -16,7 +16,7 @@ const Profile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleClick = () => {
-    dispatch(authActions.logout);
+    dispatch(authActions.logout());
     localStorage.removeItem("userId");
     navigate("/");
   };
@@ -61,6 +61,7 @@ const Profile = () => {
                 date={post.date}
                 id={post.id}
                 user={user._id}
+                name = {user.Name}
                 key={index}
               />
             ))}
