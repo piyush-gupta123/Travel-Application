@@ -1,9 +1,13 @@
 import express from "express";
 import mongoose from "mongoose";
-import postRouter from "./Routes/posts-routes";
-import userRouter from "./Routes/user-routes";
+import postRouter from "./Routes/posts-routes.js";
+import userRouter from "./Routes/user-routes.js";
 import cors from "cors";
 import dotenv from "dotenv";
+import path from "path";
+import * as url from 'url';
+// const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 mongoose.set("strictQuery", true);
 
 const app = express();
@@ -14,16 +18,20 @@ app.use(express.json());
 app.use("/user", userRouter);
 app.use("/posts", postRouter);
 const PORT = process.env.PORT || 5000;
-mongoose.connect(process.env.MONGO_URL).catch((err) => console.log(err));
+mongoose.connect(process.env.MONGO_URL)
+.then(()=>app.listen(PORT))
+.then(()=>`Server Is running at ${PORT}`)
+.catch((err) => console.log(err));
 
-// if(process.env.NODE_ENV ==="production"){
-//   app.use(express.static('client/build'));
-  // const path = require("path")
-  // app.get('*',(req,res)=>{
-  //   res.sendFile(path.resolve(__dirname,'client','build','index.html'))
-  // })
-// }
+app.use(express.static(path.join(__dirname,"./client/build")));
+app.get('*',(req,res)=>{
+  res.sendFile(path.join(__dirname,"./client/build/index.html"),
+  function(err){
+    res.status(500).send(err);
+  })
+})
 
-app.listen(PORT, () => {
-  console.log(`Server is running at ${PORT} successfully`);
-});
+
+// app.listen(PORT, () => {
+//   console.log(`Server is running at ${PORT} successfully`);
+// });
