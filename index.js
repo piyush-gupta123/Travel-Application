@@ -24,9 +24,11 @@ mongoose.connect(process.env.MONGO_URL)
 .catch((err) => console.log(err));
 
 app.use(express.static(path.join(__dirname,"./client/build")));
-app.get('*',(req,res)=>{
-  res.sendFile(path.join(__dirname,"./client/build/index.html"),
-  function(err){
+app.get('*',(_,res)=>{
+  const currpath = path.join(__dirname,'./client/build/index.html')
+  const resolvedPath = path.resolve(currpath)
+  res.sendFile(resolvedPath,
+  (err)=>{
     res.status(500).send(err);
   })
 })
