@@ -23,13 +23,13 @@ mongoose.connect(process.env.MONGO_URL)
 .then(()=>`Server Is running at ${PORT}`)
 .catch((err) => console.log(err));
 
-app.use(express.static(path.join(__dirname,"./client/build")));
+app.use(express.static(path.join(__dirname,'client','build','index.html')));
 app.get('*',(_,res)=>{
-  const currpath = path.join(__dirname,'./client/build/index.html')
+  const currpath = path.join(__dirname,'client','build','index.html')
   const resolvedPath = path.resolve(currpath)
   res.sendFile(resolvedPath,
   (err)=>{
-    res.status(500).send(err);
+    res.status(500).send("Something went wrong!! Try Again");
   })
 })
 
