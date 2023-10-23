@@ -1,9 +1,5 @@
 # Travel-Application
-Where multiple users can create their travel diary blog and post it.
-
-Any User Can See Any Different User's Blog.
-
-User Can Alter, Delete The Blog
+The Travel Blog Project, built using ReactJS and NodeJS, is a dynamic and engaging platform that takes you on a digital journey to explore the world's wonders. This project seamlessly combines the power of front-end ReactJS with the versatility of back-end NodeJS to create an immersive travel experience.
 
 
 NodeJS: Node.js is an open-source, cross-platform, back-end JavaScript runtime environment that runs on a JavaScript Engine and executes JavaScript code outside a web browser, which was designed to build scalable network applications.
