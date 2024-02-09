@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const getAllUsers = async () => {
-  const res = await axios.get("http://localhost:5000/posts");
+  const res = await axios.get("https://travel-application-api.vercel.app/posts");
 
   if (res.status !== 200) {
     return console.log("Some Error Occurred");
@@ -13,7 +13,7 @@ export const getAllUsers = async () => {
 
 export const sendAuthRequest = async (signUp, data) => {
   const response = await axios
-    .post(`http://localhost:5000/user/${signUp ? "register" : "login"}/`, {
+    .post(`https://travel-application-api.vercel.app/user/${signUp ? "register" : "login"}/`, {
       name: data.name ? data.name : "",
       email: data.email,
       password: data.password,
@@ -32,7 +32,7 @@ export const sendAuthRequest = async (signUp, data) => {
 
 export const sendPostRequest = async (inputs) => {
   const res = await axios
-    .post(`http://localhost:5000/posts/create`, {
+    .post(`https://travel-application-api.vercel.app/posts/create`, {
       title: inputs.title,
       description: inputs.description,
       image: inputs.imageURL,
@@ -53,7 +53,7 @@ export const sendPostRequest = async (inputs) => {
 
 export const getItem = async (id) => {
   const res = await axios
-    .get(`http://localhost:5000/posts/${id}`)
+    .get(`https://travel-application-api.vercel.app/posts/${id}`)
     // .then((data) => console.log(data))
     .catch((err) => console.log(err));
 
@@ -68,7 +68,7 @@ export const getItem = async (id) => {
 
 export const updatePost = async (id, inputs) => {
   const response = await axios
-    .put(`http://localhost:5000/posts/update/${id}`, {
+    .put(`https://travel-application-api.vercel.app/posts/update/${id}`, {
       title: inputs.title,
       description: inputs.description,
       image: inputs.image,
@@ -88,7 +88,7 @@ export const updatePost = async (id, inputs) => {
 
 export const deletePost = async (id) => {
   const response = await axios
-    .delete(`http://localhost:5000/posts/delete/${id}`)
+    .delete(`https://travel-application-api.vercel.app/posts/delete/${id}`)
     .then(() => console.log("Success"))
     .catch((err) => console.log(err));
 
@@ -103,7 +103,7 @@ export const deletePost = async (id) => {
 
 export const getUser = async () => {
   const response = await axios
-    .get(`http://localhost:5000/user/${localStorage.getItem("userId")}`)
+    .get(`https://travel-application-api.vercel.app/user/${localStorage.getItem("userId")}`)
     // .then((data) => console.log(data))
     .catch((err) => console.log(err));
 
