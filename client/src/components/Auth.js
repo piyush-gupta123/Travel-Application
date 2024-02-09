@@ -14,15 +14,16 @@ const Auth = () => {
   const navigate = useNavigate();
 
   const onResReceived = (data)=>{
+    // console.log(data)
     if(isSignUp){
-      localStorage.setItem("userId",data.user._id)
+      localStorage.setItem("userId",data.newUser._id)
     }
     else{
       localStorage.setItem("userId",data.id)
     }
 
     dispatch(authActions.login())
-    navigate('/diaries')
+    navigate('/')
   }
 
   const handleSubmit = (e) => {
